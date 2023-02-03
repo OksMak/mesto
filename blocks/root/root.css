@@ -1,0 +1,9 @@
+.root {
+  margin: 0 auto;
+  padding: 45px 15.625% 60px;
+  max-width: 1280px;
+  width: 100%;
+  font-family: 'Inter', 'Arial', sans-serif;
+  background-color: #000000;
+  box-sizing: border-box;
+}
