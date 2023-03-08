@@ -10,3 +10,9 @@
   align-items: center;
   border-radius: 0 0 10px 10px;
 }
+
+@media screen and (max-width: 910px) {
+  .gallery__container {
+    max-width: 246px;
+  }
+}

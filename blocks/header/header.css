@@ -17,3 +17,37 @@
   border-bottom: 1px solid #545454;
   opacity: .7;
 }
+
+@media screen and (max-width: 910px) {
+  .header {
+    max-width: 581px;
+  }
+
+  .header::before {
+    top: 30px;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .header {
+    max-width: 400px;
+  }
+
+  .header::before {
+    top: 30px;
+  }
+}
+
+@media screen and (max-width: 485px) {
+  .header {
+    padding: 28px 0 69.85px;
+    max-width: 100%;
+    margin: 0;
+    max-height: 56px;
+    height: 100%;
+  }
+
+  .header::before {
+    height: 55px;
+  }
+}

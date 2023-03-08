@@ -4,3 +4,22 @@
   max-width: 880px;
   width: 100%;
 }
+
+@media screen and (max-width: 910px) {
+  .gallery {
+    max-width: 581px;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .gallery {
+    max-width: 400px;
+  }
+}
+
+@media screen and (max-width: 485px) {
+  .gallery {
+    max-width: 282px;
+    padding: 0 0 48px;
+  }
+}

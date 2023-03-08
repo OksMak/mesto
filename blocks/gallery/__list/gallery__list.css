@@ -9,3 +9,18 @@
   gap: 20px 17px;
   grid-auto-rows: 361px;
 }
+
+@media screen and (max-width: 910px) {
+  .gallery__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 17px;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .gallery__list {
+    grid-template-columns: 282px;
+    justify-content: center;
+    gap: 20px;
+  }
+}

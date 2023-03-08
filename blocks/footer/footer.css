@@ -4,3 +4,21 @@
   max-width: 880px;
   width: 100%;
 }
+
+@media screen and (max-width: 910px) {
+  .footer {
+    max-width: 581px;
+  }
+}
+
+@media screen and (max-width: 610px) {
+  .footer {
+    max-width: 400px;
+  }
+}
+
+@media screen and (max-width: 485px) {
+  .footer {
+    max-width: 282px;
+  }
+}

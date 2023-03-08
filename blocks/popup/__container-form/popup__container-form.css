@@ -8,3 +8,10 @@
   border-radius: 10px;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 485px) {
+  .popup__container-form {
+    max-width: 282px;
+    padding: 25px 22px;
+  }
+}
