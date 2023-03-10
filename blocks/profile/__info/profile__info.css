@@ -4,6 +4,7 @@
   grid-template-columns: repeat(2, minmax(min-content, max-content));
   row-gap: 16px;
   column-gap: 18px;
+  justify-content: center;
 }
 
 @media screen and (max-width: 485px) {
