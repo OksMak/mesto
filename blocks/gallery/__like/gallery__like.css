@@ -6,7 +6,7 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
-  transition: opacity .3s ease;;
+  transition: opacity .3s ease;
 }
 
 .gallery__like:hover {
