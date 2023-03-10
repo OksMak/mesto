@@ -24,7 +24,6 @@
 @media screen and (max-width: 485px) {
   .profile {
     max-width: 282px;
-    height: 286px;
     padding: 0 0 36px;
   }
 }
