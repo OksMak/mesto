@@ -12,10 +12,17 @@
   cursor: pointer;
   transition: opacity .3s ease;
   padding: 0;
+  margin-right: 19px;
 }
 
 .profile__button-edit:hover {
   opacity: .6;
+}
+
+@media screen and (max-width: 610px) {
+  .profile__button-edit {
+    margin-right: 0;
+  }
 }
 
 @media screen and (max-width: 485px) {
