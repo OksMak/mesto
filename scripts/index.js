@@ -61,6 +61,8 @@ const initialCards = [
   }
 ]; 
 
+// create card
+
 const createCard = (data) => {
   const cardElement = cardTemplate.querySelector('.gallery__list-item').cloneNode(true);
   const cardName = data.name;
@@ -80,8 +82,23 @@ initialCards.forEach(item => {
   createCard(item);
 })
 
+// add card
 
-function openEditProfilePopup () {
+const formAddCardsSubmit = (evt) => {
+  evt.preventDefault();
+
+  const card = {};
+  card.name = inputTitleCard.value;
+  card.link = inputLinkCard.value;
+
+  createCard(card);
+
+  closeAddCardPopup();
+}
+
+// edit profile popup
+
+const openEditProfilePopup = () => {
   if (!popupEditProfile.classList.contains('popup_opened')) {
     popupEditProfile.classList.add('popup_opened');
     inputProfileName.value = profileName.textContent;
@@ -89,15 +106,17 @@ function openEditProfilePopup () {
   }
 }
 
-const openAddCardsPopup = () => {
-  if (!popupAddCards.classList.contains('popup_opened')) {
-    popupAddCards.classList.add('popup_opened');
+const closeEditProfilePopup = () => {
+  if (popupEditProfile.classList.contains('popup_opened')) {
+    popupEditProfile.classList.remove('popup_opened');
   }
 }
 
-function closeEditProfilePopup () {
-  if (popupEditProfile.classList.contains('popup_opened')) {
-    popupEditProfile.classList.remove('popup_opened');
+// add cards popup
+
+const openAddCardsPopup = () => {
+  if (!popupAddCards.classList.contains('popup_opened')) {
+    popupAddCards.classList.add('popup_opened');
   }
 }
 
@@ -109,7 +128,9 @@ const closeAddCardPopup = () => {
   }
 }
 
-function formSubmit (evt) {
+// forms
+
+const formEditProfileSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = inputProfileName.value;
   profileProfession.textContent = inputProfileProfession.value;
@@ -120,4 +141,5 @@ buttonAddCard.addEventListener('click', openAddCardsPopup)
 buttonEditProfile.addEventListener('click', openEditProfilePopup);
 buttonCloseEditProfile.addEventListener('click', closeEditProfilePopup);
 buttonCloseAddCard.addEventListener('click', closeAddCardPopup);
-formEditProfile.addEventListener('submit', formSubmit);
+formEditProfile.addEventListener('submit', formEditProfileSubmit);
+formAddCards.addEventListener('submit', formAddCardsSubmit);
