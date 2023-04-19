@@ -27,14 +27,25 @@
       <ul class="gallery__list">
       </ul>
     </section>
-    <section class="popup" aria-label="Модальное окно">
+    <section id="popup-edit-profile" class="popup" aria-label="Модальное окно">
       <div class="popup__container-form">
-        <button type="button" class="popup__close"></button>
+        <button id="button-close-edit-profile" type="button" class="popup__close"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <form action="#" method="post" name="form" class="popup__form">
           <input type="text" name="name" placeholder="Имя" required class="popup__input popup__input_type_name">
           <input type="text" name="profession" placeholder="Профессия" required class="popup__input popup__input_type_profession">
           <button type="submit" class="popup__save">Сохранить</button>
+        </form>
+      </div>
+    </section>
+    <section id="popup-add-cards" class="popup" aria-label="Модальное окно">
+      <div class="popup__container-form">
+        <button id="button-close-add-card" type="button" class="popup__close"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form action="#" method="post" name="form" class="popup__form">
+          <input type="text" name="title" placeholder="Название" required class="popup__input popup__input_type_title">
+          <input type="text" name="link" placeholder="Ссылка на картинку" required class="popup__input popup__input_type_link">
+          <button type="submit" class="popup__save">Создать</button>
         </form>
       </div>
     </section>
