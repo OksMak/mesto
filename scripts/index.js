@@ -6,10 +6,10 @@ const profileProfession = document.querySelector('.profile__speciality');
 // buttons
 
 const buttonEditProfile = document.querySelector('.profile__button-edit');
+const buttonAddCard = document.querySelector('.profile__button-add');
 const buttonCloseEditProfile = document.querySelector('#button-close-edit-profile');
 const buttonCloseAddCard = document.querySelector('#button-close-add-card');
 const buttonCloseImage = document.querySelector('#button-close-image');
-const buttonAddCard = document.querySelector('.profile__button-add');
 
 // popup
 
@@ -83,8 +83,6 @@ const createCard = (data) => {
   const buttonLike = cardElement.querySelector('.gallery__like');
   const buttonTrash = cardElement.querySelector('.gallery__trash');
 
-  
-
   cardImage.src = cardLink;
   cardImage.alt = cardName;
   cardTitle.textContent = cardName;
@@ -99,7 +97,7 @@ const createCard = (data) => {
     target.closest('.gallery__list-item').remove();
   })
 
-  cardImage.addEventListener('click', (evt) => {
+  cardImage.addEventListener('click', () => {
     popupOpenImage.classList.add('popup_opened');
     popupImage.src = cardLink;
     popupImage.alt = cardName;
@@ -151,6 +149,8 @@ const closeAddCardPopup = () => {
   }
 }
 
+// image popup
+
 const closeImagePopup = () => {
   if (popupOpenImage.classList.contains('popup_opened')) {
     popupOpenImage.classList.remove('popup_opened');
@@ -159,7 +159,7 @@ const closeImagePopup = () => {
 
 // edit profile
 
-const formEditProfileSubmit = (evt) => {
+const submitEditProfileForm = (evt) => {
   evt.preventDefault();
   profileName.textContent = inputProfileName.value;
   profileProfession.textContent = inputProfileProfession.value;
@@ -168,7 +168,7 @@ const formEditProfileSubmit = (evt) => {
 
 // add card
 
-const formAddCardsSubmit = (evt) => {
+const submitAddCardsForm = (evt) => {
   evt.preventDefault();
 
   const card = {};
@@ -187,5 +187,5 @@ buttonCloseEditProfile.addEventListener('click', closeEditProfilePopup);
 buttonCloseAddCard.addEventListener('click', closeAddCardPopup);
 buttonCloseImage.addEventListener('click', closeImagePopup);
 
-formEditProfile.addEventListener('submit', formEditProfileSubmit);
-formAddCards.addEventListener('submit', formAddCardsSubmit);
+formEditProfile.addEventListener('submit', submitEditProfileForm);
+formAddCards.addEventListener('submit', submitAddCardsForm);
