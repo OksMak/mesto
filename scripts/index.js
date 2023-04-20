@@ -1,38 +1,29 @@
 // profile
 const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__speciality');
-
-
-// buttons
-
-const buttonEditProfile = document.querySelector('.profile__button-edit');
-const buttonAddCard = document.querySelector('.profile__button-add');
-const buttonCloseEditProfile = document.querySelector('#button-close-edit-profile');
-const buttonCloseAddCard = document.querySelector('#button-close-add-card');
-const buttonCloseImage = document.querySelector('#button-close-image');
-
-// popup
-
-const popupEditProfile = document.querySelector('#popup-edit-profile');
-const popupAddCards = document.querySelector('#popup-add-cards');
-const popupOpenImage = document.querySelector('#popup-image');
-
-// popup image
-
-const popupImage = document.querySelector('.popup__image');
-const popupImageCaption = document.querySelector('.popup__caption');
-
-// inputs
-
 const inputProfileName = document.querySelector('.popup__input_type_name');
 const inputProfileProfession = document.querySelector('.popup__input_type_profession');
+
+// popup edit profile
+const popupEditProfile = document.querySelector('#popup-edit-profile');
+const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close');
+const buttonEditProfile = document.querySelector('.profile__button-edit');
+const formEditProfile = popupEditProfile.querySelector('.popup__form');
+
+// popup add cards
+
+const popupAddCards = document.querySelector('#popup-add-cards');
+const buttonAddCard = document.querySelector('.profile__button-add');
+const buttonCloseAddCard = popupAddCards.querySelector('.popup__close');
+const formAddCards = popupAddCards.querySelector('.popup__form');
 const inputTitleCard = document.querySelector('.popup__input_type_title');
 const inputLinkCard = document.querySelector('.popup__input_type_link');
 
-// forms
-
-const formEditProfile = popupEditProfile.querySelector('.popup__form');
-const formAddCards = popupAddCards.querySelector('.popup__form');
+// popup image
+const popupOpenImage = document.querySelector('#popup-open-image');
+const buttonCloseImage = popupOpenImage.querySelector('.popup__close');
+const popupImage = document.querySelector('.popup__image');
+const popupImageCaption = document.querySelector('.popup__caption');
 
 // template gallery-item
 
@@ -109,52 +100,62 @@ const createCard = (data) => {
 
 // render card
 
+const renderInitialCard = (card) => {
+  galleryList.append(createCard(card));
+}
+
+initialCards.forEach(item => {
+  renderInitialCard(item);
+})
+
 const renderCard = (card) => {
   galleryList.prepend(createCard(card));
 }
 
-initialCards.forEach(item => {
-  renderCard(item);
-})
+// open popup function
+
+const openPopup = (popupElement) => {
+  if (!popupElement.classList.contains('popup_opened')) {
+    popupElement.classList.add('popup_opened');
+  }
+}
+
+// close popup function
+
+const closePopup = (popupElement) => {
+  if (popupElement.classList.contains('popup_opened')) {
+    popupElement.classList.remove('popup_opened');
+  }
+}
 
 // edit profile popup
 
 const openEditProfilePopup = () => {
-  if (!popupEditProfile.classList.contains('popup_opened')) {
-    popupEditProfile.classList.add('popup_opened');
+    openPopup(popupEditProfile)
     inputProfileName.value = profileName.textContent;
     inputProfileProfession.value = profileProfession.textContent;
   }
-}
 
 const closeEditProfilePopup = () => {
-  if (popupEditProfile.classList.contains('popup_opened')) {
-    popupEditProfile.classList.remove('popup_opened');
-  }
+  closePopup(popupEditProfile);
 }
 
 // add card popup
 
 const openAddCardsPopup = () => {
-  if (!popupAddCards.classList.contains('popup_opened')) {
-    popupAddCards.classList.add('popup_opened');
-  }
+  openPopup(popupAddCards);
 }
 
 const closeAddCardPopup = () => {
-  if (popupAddCards.classList.contains('popup_opened')) {
-    popupAddCards.classList.remove('popup_opened');
+    closePopup(popupAddCards);
     inputTitleCard.value = '';
     inputLinkCard.value = '';
   }
-}
 
 // image popup
 
 const closeImagePopup = () => {
-  if (popupOpenImage.classList.contains('popup_opened')) {
-    popupOpenImage.classList.remove('popup_opened');
-  }
+  closePopup(popupOpenImage);
 }
 
 // edit profile
