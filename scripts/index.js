@@ -71,13 +71,20 @@ const createCard = (data) => {
   const cardImage = cardElement.querySelector('.gallery__list-image');
   const cardTitle = cardElement.querySelector('.gallery__image-title');
   const buttonLike = cardElement.querySelector('.gallery__like');
+  const buttonTrash = cardElement.querySelector('.gallery__trash');
 
   cardImage.src = cardLink;
   cardImage.alt = cardName;
   cardTitle.textContent = cardName;
 
   buttonLike.addEventListener('click', (evt) => {
-    evt.target.classList.toggle('gallery__like_active');
+    const target = evt.target;
+    target.classList.toggle('gallery__like_active');
+  })
+
+  buttonTrash.addEventListener('click', (evt) => {
+    const target = evt.target;
+    target.closest('.gallery__list-item').remove();
   })
 
   return cardElement;

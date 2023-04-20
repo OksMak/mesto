@@ -1,3 +1,19 @@
 .gallery__trash {
-    background-image: url('../../../images/Trash.svg');
+  background-image: url(../../../images/Trash.svg);
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 18px;
+  height: 19px;
+  background-color: inherit;
+  background-repeat: no-repeat;
+  background-size: cover;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity .3s ease;
+}
+
+.gallery__trash:hover {
+  opacity: .5;
 }
