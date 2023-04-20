@@ -8,12 +8,22 @@ const profileProfession = document.querySelector('.profile__speciality');
 const buttonEditProfile = document.querySelector('.profile__button-edit');
 const buttonCloseEditProfile = document.querySelector('#button-close-edit-profile');
 const buttonCloseAddCard = document.querySelector('#button-close-add-card');
+const buttonCloseImage = document.querySelector('#button-close-image');
 const buttonAddCard = document.querySelector('.profile__button-add');
 
 // popup
 
 const popupEditProfile = document.querySelector('#popup-edit-profile');
 const popupAddCards = document.querySelector('#popup-add-cards');
+const popupOpenImage = document.querySelector('#popup-image');
+
+// popup image
+
+const popupImage = document.querySelector('.popup__image');
+const popupImageCaption = document.querySelector('.popup__caption');
+
+// inputs
+
 const inputProfileName = document.querySelector('.popup__input_type_name');
 const inputProfileProfession = document.querySelector('.popup__input_type_profession');
 const inputTitleCard = document.querySelector('.popup__input_type_title');
@@ -73,6 +83,8 @@ const createCard = (data) => {
   const buttonLike = cardElement.querySelector('.gallery__like');
   const buttonTrash = cardElement.querySelector('.gallery__trash');
 
+  
+
   cardImage.src = cardLink;
   cardImage.alt = cardName;
   cardTitle.textContent = cardName;
@@ -85,6 +97,13 @@ const createCard = (data) => {
   buttonTrash.addEventListener('click', (evt) => {
     const target = evt.target;
     target.closest('.gallery__list-item').remove();
+  })
+
+  cardImage.addEventListener('click', (evt) => {
+    popupOpenImage.classList.add('popup_opened');
+    popupImage.src = cardLink;
+    popupImage.alt = cardName;
+    popupImageCaption.textContent = cardName;
   })
 
   return cardElement;
@@ -132,6 +151,12 @@ const closeAddCardPopup = () => {
   }
 }
 
+const closeImagePopup = () => {
+  if (popupOpenImage.classList.contains('popup_opened')) {
+    popupOpenImage.classList.remove('popup_opened');
+  }
+}
+
 // edit profile
 
 const formEditProfileSubmit = (evt) => {
@@ -160,6 +185,7 @@ buttonEditProfile.addEventListener('click', openEditProfilePopup);
 
 buttonCloseEditProfile.addEventListener('click', closeEditProfilePopup);
 buttonCloseAddCard.addEventListener('click', closeAddCardPopup);
+buttonCloseImage.addEventListener('click', closeImagePopup);
 
 formEditProfile.addEventListener('submit', formEditProfileSubmit);
 formAddCards.addEventListener('submit', formAddCardsSubmit);
