@@ -5,14 +5,14 @@ const inputProfileName = document.querySelector('.popup__input_type_name');
 const inputProfileProfession = document.querySelector('.popup__input_type_profession');
 
 // popup edit profile
-const popupEditProfile = document.querySelector('#popup-edit-profile');
+const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close');
 const buttonEditProfile = document.querySelector('.profile__button-edit');
 const formEditProfile = popupEditProfile.querySelector('.popup__form');
 
 // popup add cards
 
-const popupAddCards = document.querySelector('#popup-add-cards');
+const popupAddCards = document.querySelector('.popup_type_add-cards');
 const buttonAddCard = document.querySelector('.profile__button-add');
 const buttonCloseAddCard = popupAddCards.querySelector('.popup__close');
 const formAddCards = popupAddCards.querySelector('.popup__form');
@@ -20,7 +20,7 @@ const inputTitleCard = document.querySelector('.popup__input_type_title');
 const inputLinkCard = document.querySelector('.popup__input_type_link');
 
 // popup image
-const popupOpenImage = document.querySelector('#popup-open-image');
+const popupOpenImage = document.querySelector('.popup_type_show-image');
 const buttonCloseImage = popupOpenImage.querySelector('.popup__close');
 const popupImage = document.querySelector('.popup__image');
 const popupImageCaption = document.querySelector('.popup__caption');

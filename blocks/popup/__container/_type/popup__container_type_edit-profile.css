@@ -1,4 +1,4 @@
-.popup__container_type_profile {
+.popup__container_type_edit-profile {
     padding: 34px 36px 37px;
     max-width: 430px;
     width: 100%;
@@ -9,7 +9,7 @@
   }
   
   @media screen and (max-width: 485px) {
-    .popup__container_type_profile {
+    .popup__container_type_edit-profile {
       max-width: 282px;
       padding: 25px 22px;
     }
