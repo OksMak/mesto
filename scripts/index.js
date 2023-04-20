@@ -70,31 +70,28 @@ const createCard = (data) => {
 
   const cardImage = cardElement.querySelector('.gallery__list-image');
   const cardTitle = cardElement.querySelector('.gallery__image-title');
+  const buttonLike = cardElement.querySelector('.gallery__like');
 
   cardImage.src = cardLink;
   cardImage.alt = cardName;
   cardTitle.textContent = cardName;
 
-  galleryList.prepend(cardElement);
+  buttonLike.addEventListener('click', (evt) => {
+    evt.target.classList.toggle('gallery__like_active');
+  })
+
+  return cardElement;
+}
+
+// render card
+
+const renderCard = (card) => {
+  galleryList.prepend(createCard(card));
 }
 
 initialCards.forEach(item => {
-  createCard(item);
+  renderCard(item);
 })
-
-// add card
-
-const formAddCardsSubmit = (evt) => {
-  evt.preventDefault();
-
-  const card = {};
-  card.name = inputTitleCard.value;
-  card.link = inputLinkCard.value;
-
-  createCard(card);
-
-  closeAddCardPopup();
-}
 
 // edit profile popup
 
@@ -112,7 +109,7 @@ const closeEditProfilePopup = () => {
   }
 }
 
-// add cards popup
+// add card popup
 
 const openAddCardsPopup = () => {
   if (!popupAddCards.classList.contains('popup_opened')) {
@@ -128,7 +125,7 @@ const closeAddCardPopup = () => {
   }
 }
 
-// forms
+// edit profile
 
 const formEditProfileSubmit = (evt) => {
   evt.preventDefault();
@@ -137,9 +134,25 @@ const formEditProfileSubmit = (evt) => {
   closeEditProfilePopup();
 }
 
+// add card
+
+const formAddCardsSubmit = (evt) => {
+  evt.preventDefault();
+
+  const card = {};
+  card.name = inputTitleCard.value;
+  card.link = inputLinkCard.value;
+
+  renderCard(card);
+
+  closeAddCardPopup();
+}
+
 buttonAddCard.addEventListener('click', openAddCardsPopup)
 buttonEditProfile.addEventListener('click', openEditProfilePopup);
+
 buttonCloseEditProfile.addEventListener('click', closeEditProfilePopup);
 buttonCloseAddCard.addEventListener('click', closeAddCardPopup);
+
 formEditProfile.addEventListener('submit', formEditProfileSubmit);
 formAddCards.addEventListener('submit', formAddCardsSubmit);
