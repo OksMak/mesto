@@ -62,6 +62,22 @@ const initialCards = [
   }
 ]; 
 
+// open popup function
+
+const openPopup = (popupElement) => {
+  if (!popupElement.classList.contains('popup_opened')) {
+    popupElement.classList.add('popup_opened');
+  }
+}
+
+// close popup function
+
+const closePopup = (popupElement) => {
+  if (popupElement.classList.contains('popup_opened')) {
+    popupElement.classList.remove('popup_opened');
+  }
+}
+
 // create card
 
 const createCard = (data) => {
@@ -89,7 +105,7 @@ const createCard = (data) => {
   })
 
   cardImage.addEventListener('click', () => {
-    popupOpenImage.classList.add('popup_opened');
+    openPopup(popupOpenImage);
     popupImage.src = cardLink;
     popupImage.alt = cardName;
     popupImageCaption.textContent = cardName;
@@ -110,22 +126,6 @@ initialCards.forEach(item => {
 
 const renderCard = (card) => {
   galleryList.prepend(createCard(card));
-}
-
-// open popup function
-
-const openPopup = (popupElement) => {
-  if (!popupElement.classList.contains('popup_opened')) {
-    popupElement.classList.add('popup_opened');
-  }
-}
-
-// close popup function
-
-const closePopup = (popupElement) => {
-  if (popupElement.classList.contains('popup_opened')) {
-    popupElement.classList.remove('popup_opened');
-  }
 }
 
 // edit profile popup
