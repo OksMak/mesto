@@ -8,7 +8,7 @@ const enableValidation = (data) => {
 	const buttonOpenEditProfile = document.querySelector('.profile__button-edit');
 
 	// add cards
-	
+
 	const popupAddCards = document.querySelector('.popup_type_add-cards');
 	const buttonCloseAddCards = popupAddCards.querySelector('.popup__close');
 	const buttonOpenAddCards = document.querySelector('.profile__button-add');
@@ -21,10 +21,8 @@ const enableValidation = (data) => {
 	
 	const toggleButtonState = (inputList, button) => {
 		if (hasInvalidInput(inputList)) {
-			console.log('true')
 			button.classList.add(data.inactiveButtonClass);
 		} else {
-			console.log('false')
 			button.classList.remove(data.inactiveButtonClass);
 		}
 	}

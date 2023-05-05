@@ -1,3 +1,7 @@
+// popup list
+
+const popupList = Array.from(document.querySelectorAll('.popup'));
+
 // profile
 const profileName = document.querySelector('.profile__name');
 const profileProfession = document.querySelector('.profile__speciality');
@@ -62,16 +66,46 @@ const initialCards = [
   }
 ]; 
 
+// close popup by overlay and keydown
+
+const handleCloseOverlay = (evt) => {
+    if (evt.target.classList.contains('popup')) {
+      closePopup(evt.target);
+    }
+}
+
+const handleSetCursor = (evt) => {
+  if (evt.target.classList.contains('popup__container')) {
+    evt.target.style.cursor = 'auto';
+  }
+}
+
+const handleClosePopup = (evt) => {
+  popupList.forEach(popupElement => {
+    if (evt.key === 'Escape') {
+      closePopup(popupElement)
+    }
+  })
+}
+
 // open popup function
 
 const openPopup = (popupElement) => {
   popupElement.classList.add('popup_opened');
+
+  document.addEventListener('keydown', handleClosePopup);
+  popupElement.addEventListener('click', handleCloseOverlay);
+  popupElement.addEventListener('mouseover', handleSetCursor);
 }
 
 // close popup function
 
 const closePopup = (popupElement) => {
   popupElement.classList.remove('popup_opened');
+
+  document.removeEventListener('keydown', handleClosePopup);
+  popupElement.removeEventListener('click', handleCloseOverlay);
+  popupElement.removeEventListener('mouseover', handleSetCursor);
 }
 
 // create card
@@ -176,6 +210,8 @@ const submitAddCardsForm = (evt) => {
 
   closeAddCardPopup();
 }
+
+// listeners
 
 buttonAddCard.addEventListener('click', openAddCardsPopup)
 buttonEditProfile.addEventListener('click', openEditProfilePopup);
