@@ -65,17 +65,13 @@ const initialCards = [
 // open popup function
 
 const openPopup = (popupElement) => {
-  if (!popupElement.classList.contains('popup_opened')) {
-    popupElement.classList.add('popup_opened');
-  }
+  popupElement.classList.add('popup_opened');
 }
 
 // close popup function
 
 const closePopup = (popupElement) => {
-  if (popupElement.classList.contains('popup_opened')) {
-    popupElement.classList.remove('popup_opened');
-  }
+  popupElement.classList.remove('popup_opened');
 }
 
 // create card
