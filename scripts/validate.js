@@ -27,17 +27,22 @@ const enableValidation = (data) => {
 		}
 	}
 	
-	const showInputError = (formElement, inputElement, errorMessage) => {
+	const searchErrorElement = (formElement, inputElement) => {
 		const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+		return errorElement;
+	}
 	
+	const showInputError = (formElement, inputElement, errorMessage) => {
+		const errorElement = searchErrorElement(formElement, inputElement);
+
 		inputElement.classList.add(data.inputErrorClass);
 		errorElement.classList.add(data.errorClass);
 		errorElement.textContent = errorMessage;
 	}
 	
 	const hideInputError = (formElement, inputElement) => {
-		const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-	
+		const errorElement = searchErrorElement(formElement, inputElement);
+
 		inputElement.classList.remove(data.inputErrorClass);
 		errorElement.classList.remove(data.errorClass);
 		errorElement.textContent = '';
