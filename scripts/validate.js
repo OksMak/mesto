@@ -3,15 +3,15 @@ const enableValidation = (data) => {
 
 	// edit profile
 
-	const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-	const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close');
-	const buttonOpenEditProfile = document.querySelector('.profile__button-edit');
+	const popupEditProfile = document.querySelector(data.popupEditProfileClass);
+	const buttonCloseEditProfile = popupEditProfile.querySelector(data.buttonClose);
+	const buttonOpenEditProfile = document.querySelector(data.buttonEditProfile);
 
 	// add cards
 
-	const popupAddCards = document.querySelector('.popup_type_add-cards');
-	const buttonCloseAddCards = popupAddCards.querySelector('.popup__close');
-	const buttonOpenAddCards = document.querySelector('.profile__button-add');
+	const popupAddCards = document.querySelector(data.popupAddCardsClass);
+	const buttonCloseAddCards = popupAddCards.querySelector(data.buttonClose);
+	const buttonOpenAddCards = document.querySelector(data.buttonAddCards);
 
 	const hasInvalidInput = (inputList) => {
 		return inputList.some(input => {
@@ -103,5 +103,10 @@ enableValidation({
 	submitButtonSelector: '.popup__button',
 	inactiveButtonClass: 'popup__button_disabled',
 	inputErrorClass: 'popup__input_type_error',
-	errorClass: 'popup__input-error_visible'
+	errorClass: 'popup__input-error_visible',
+	popupEditProfileClass: '.popup_type_edit-profile',
+	popupAddCardsClass: '.popup_type_add-cards',
+	buttonEditProfile: '.profile__button-edit',
+	buttonAddCards: '.profile__button-add',
+	buttonClose: '.popup__close'
   });
