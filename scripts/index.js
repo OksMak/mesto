@@ -1,3 +1,5 @@
+import Card from './card.js';
+
 // popup list
 
 const popupList = Array.from(document.querySelectorAll('.popup'));
@@ -28,10 +30,6 @@ const popupOpenImage = document.querySelector('.popup_type_show-image');
 const buttonCloseImage = popupOpenImage.querySelector('.popup__close');
 const popupImage = document.querySelector('.popup__image');
 const popupImageCaption = document.querySelector('.popup__caption');
-
-// template gallery-item
-
-const cardTemplate = document.querySelector('#gallery__list-item').content;
 
 // gallery-list
 
@@ -110,40 +108,19 @@ const closePopup = (popupElement) => {
 
 // create card
 
-const createCard = (data) => {
-  const cardElement = cardTemplate.querySelector('.gallery__list-item').cloneNode(true);
-  const cardName = data.name;
-  const cardLink = data.link;
+const createCard = (data, template) => {
+  const card = new Card(data, template);
+  const cardElement = card.generateCard();
 
   const cardImage = cardElement.querySelector('.gallery__list-image');
-  const cardTitle = cardElement.querySelector('.gallery__image-title');
-  const buttonLike = cardElement.querySelector('.gallery__like');
-  const buttonTrash = cardElement.querySelector('.gallery__trash');
-
-  cardImage.src = cardLink;
-  cardImage.alt = cardName;
-  cardTitle.textContent = cardName;
-
-  const handleLikeButtonClick = (evt) => {
-    const target = evt.target;
-    target.classList.toggle('gallery__like_active');
-  }
-
-  const handleButtonTrashClick = (evt) => {
-    const target = evt.target;
-    target.closest('.gallery__list-item').remove();
-  }
+  const cardName = cardElement.querySelector('.gallery__image-title');
 
   const handleCardImageClick = () => {
     openPopup(popupOpenImage);
-    popupImage.src = cardLink;
-    popupImage.alt = cardName;
-    popupImageCaption.textContent = cardName;
+    popupImage.src = cardImage.src;
+    popupImage.alt = cardName.textContent;
+    popupImageCaption.textContent = cardName.textContent;
   }
-
-  buttonLike.addEventListener('click', handleLikeButtonClick);
-
-  buttonTrash.addEventListener('click', handleButtonTrashClick);
 
   cardImage.addEventListener('click', handleCardImageClick);
 
@@ -152,21 +129,15 @@ const createCard = (data) => {
 
 // render card
 
-const renderInitialCard = (card) => {
-  galleryList.append(createCard(card));
-}
-
-const init = (initialCards) => {
+const renderCard = (initialCards) => {
   initialCards.forEach(item => {
-    renderInitialCard(item);
+    const cardElement = createCard(item, '#gallery__list-item');
+
+    galleryList.append(cardElement);
   })
 }
 
-init(initialCards);
-
-const renderCard = (card) => {
-  galleryList.prepend(createCard(card));
-}
+renderCard(initialCards);
 
 // edit profile popup
 
@@ -212,11 +183,14 @@ const handleFormEditProfileSubmit = (evt) => {
 const handleFormAddCardsSubmit = (evt) => {
   evt.preventDefault();
 
-  const card = {};
-  card.name = inputTitleCard.value;
-  card.link = inputLinkCard.value;
+  const data = {
+    name: inputTitleCard.value,
+    link: inputLinkCard.value,
+  }
 
-  renderCard(card);
+  const cardElement = createCard(data, '#gallery__list-item');
+
+  galleryList.prepend(cardElement);
 
   handleButtonCloseAddCardClick();
 }
