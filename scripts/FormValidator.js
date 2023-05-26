@@ -11,6 +11,8 @@ class FormValidator {
 		this._buttonEditProfile = data.buttonEditProfile;
 		this._buttonAddCards = data.buttonAddCards;
 		this._buttonClose = data.buttonClose;
+		this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
+		this._buttonElement = this._formSelector.querySelector(this._submitButtonSelector);
 	}
 
 	_hasInvalidInput(inputList) {
@@ -108,53 +110,60 @@ class FormValidator {
 		this._setInactiveButton(buttonElement);
 	}
 
-	_setEventListeners() {
-		const inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
-		const buttonElement = this._formSelector.querySelector(this._submitButtonSelector);
+	// listener open form
 
-		this._toggleButtonState(inputList, buttonElement);
+	_setEventListenerOpenForm(inputElement) {
+		this._popupEditProfile = document.querySelector(this._popupEditProfileClass);
+		this._buttonCloseEditProfile = this._popupEditProfile.querySelector(this._buttonClose);
+		this._buttonOpenEditProfile = document.querySelector(this._buttonEditProfile);
 
-		inputList.forEach(inputElement => {
-
-			// input listener
-
-		inputElement.addEventListener('input', () => {
-			this._handleInputElementInput(inputElement, inputList, buttonElement);
+		this._buttonOpenEditProfile.addEventListener('click', () => {
+			this._handleButtonOpenEditProfileClick(inputElement, this._buttonElement);
 		})
 
-			// sumbit listener
+		this._popupAddCards = document.querySelector(this._popupAddCardsClass);
+		this._buttonCloseAddCards = this._popupAddCards.querySelector(this._buttonClose);
+		this._buttonOpenAddCards = document.querySelector(this._buttonAddCards);
 
-			this._formSelector.addEventListener('submit', () => {
-				this._handleFormSubmit(inputElement, buttonElement);
+		this._buttonOpenAddCards.addEventListener('click', () => {
+			this._handleButtonOpenAddCardsClick(inputElement, this._inputList, this._buttonElement)
+		})
+	}
+
+	// listener close form
+
+	_setEventListenerCloseForm(inputElement) {
+		this._buttonCloseEditProfile.addEventListener('click', () => {
+			this._handleButtonCloseEditProfileClick(inputElement, this._buttonElement);
+		})
+
+		this._buttonCloseAddCards.addEventListener('click', () => {
+			this._handleButtonCloseAddCardsClick(inputElement, this._inputList, this._buttonElement)
+		})
+	}
+
+	// listener submit form
+
+	_setEventListenerSubmitForm(inputElement) {
+		this._formSelector.addEventListener('submit', () => {
+			this._handleFormSubmit(inputElement, this._buttonElement);
+		})
+	}
+
+	// listener input form
+
+	_setEventListenerInputForm(inputElement) {
+			inputElement.addEventListener('input', () => {
+				this._handleInputElementInput(inputElement, this._inputList, this._buttonElement);
 			})
+	}
 
-			// edit profile listeners
-
-			const popupEditProfile = document.querySelector(this._popupEditProfileClass);
-			const buttonCloseEditProfile = popupEditProfile.querySelector(this._buttonClose);
-			const buttonOpenEditProfile = document.querySelector(this._buttonEditProfile);
-
-			buttonOpenEditProfile.addEventListener('click', () => {
-				this._handleButtonOpenEditProfileClick(inputElement, buttonElement);
-			})
-	
-			buttonCloseEditProfile.addEventListener('click', () => {
-				this._handleButtonCloseEditProfileClick(inputElement, buttonElement);
-			})
-
-			// add cards listeners
-
-			const popupAddCards = document.querySelector(this._popupAddCardsClass);
-			const buttonCloseAddCards = popupAddCards.querySelector(this._buttonClose);
-			const buttonOpenAddCards = document.querySelector(this._buttonAddCards);
-
-			buttonOpenAddCards.addEventListener('click', () => {
-				this._handleButtonOpenAddCardsClick(inputElement, inputList, buttonElement)
-			})
-	
-			buttonCloseAddCards.addEventListener('click', () => {
-				this._handleButtonCloseAddCardsClick(inputElement, inputList, buttonElement)
-			})
+	_setEventListeners() {
+		this._inputList.forEach(inputElement => {
+			this._setEventListenerInputForm(inputElement);
+			this._setEventListenerOpenForm(inputElement)
+			this._setEventListenerCloseForm(inputElement);
+			this._setEventListenerSubmitForm(inputElement)
 		})
 	}
 

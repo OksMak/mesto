@@ -14,14 +14,8 @@ class Card {
 		return cardElement;
 	}
 
-	_setEventListeners() {
-		this._element.querySelector('.gallery__like').addEventListener('click', () => {
-			this._handleLikeButtonClick();
-		});
-
-		this._element.querySelector('.gallery__trash').addEventListener('click', () => {
-			this._handleTrashButtonClick();
-		})
+	_openCardImage(cardElement) {
+		cardElement.classList.add('popup_opened');
 	}
 
 	_handleLikeButtonClick() {
@@ -30,6 +24,32 @@ class Card {
 
 	_handleTrashButtonClick() {
 		this._element.remove();
+	}
+
+	_handleCardImageClick() {
+		this._popupOpenCardImage = document.querySelector('.popup_type_show-image');
+		this._popupImage = document.querySelector('.popup__image');
+		this._popupImageCaption = document.querySelector('.popup__caption');
+
+		this._openCardImage(this._popupOpenCardImage);
+		this._popupImage.src = this._link;
+		this._popupImage.alt = this._name;
+		this._popupImageCaption.textContent = this._name;
+	}
+
+	_setEventListeners() {
+		this._element.querySelector('.gallery__like').addEventListener('click', () => {
+			this._handleLikeButtonClick();
+		});
+
+		this._element.querySelector('.gallery__trash').addEventListener('click', () => {
+			this._handleTrashButtonClick();
+		})
+
+		this._element.querySelector('.gallery__list-image').addEventListener('click', () => {
+			this._handleCardImageClick();
+		})
+
 	}
 
 	generateCard() {
