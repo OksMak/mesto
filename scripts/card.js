@@ -14,20 +14,6 @@ class Card {
 		return cardElement;
 	}
 
-	generateCard() {
-		this._element = this._getCard();
-		this._setEventListeners();
-
-		const galleryImage = this._element.querySelector('.gallery__list-image');
-		const galleryImageName = this._element.querySelector('.gallery__image-title');
-
-		galleryImage.src = this._link;
-		galleryImage.alt = this._name;
-		galleryImageName.textContent = this._name;
-
-		return this._element;
-	}
-
 	_setEventListeners() {
 		this._element.querySelector('.gallery__like').addEventListener('click', () => {
 			this._handleLikeButtonClick();
@@ -44,6 +30,20 @@ class Card {
 
 	_handleTrashButtonClick() {
 		this._element.remove();
+	}
+
+	generateCard() {
+		this._element = this._getCard();
+		this._setEventListeners();
+
+		const galleryImage = this._element.querySelector('.gallery__list-image');
+		const galleryImageName = this._element.querySelector('.gallery__image-title');
+
+		galleryImage.src = this._link;
+		galleryImage.alt = this._name;
+		galleryImageName.textContent = this._name;
+
+		return this._element;
 	}
 }
 
