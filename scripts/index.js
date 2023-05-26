@@ -29,8 +29,6 @@ const inputLinkCard = document.querySelector('.popup__input_type_link');
 // popup image
 const popupOpenImage = document.querySelector('.popup_type_show-image');
 const buttonCloseImage = popupOpenImage.querySelector('.popup__close');
-const popupImage = document.querySelector('.popup__image');
-const popupImageCaption = document.querySelector('.popup__caption');
 
 // gallery-list
 
@@ -87,6 +85,12 @@ const handleClosePopupKeydown = (evt) => {
   })
 }
 
+const handleCardImageClick = () => {
+  document.addEventListener('keydown', handleClosePopupKeydown);
+  popupOpenImage.addEventListener('click', handleCloseOverlayClick);
+  popupOpenImage.addEventListener('mouseover', handleSetCursorMouseover);
+}
+
 // open popup function
 
 const openPopup = (popupElement) => {
@@ -109,19 +113,17 @@ const closePopup = (popupElement) => {
 
 // create card
 
+const searchCardImage = (cardElement) => {
+  const cardImage = cardElement.querySelector('.gallery__list-image');
+
+  return cardImage;
+}
+
 const createCard = (data, template) => {
   const card = new Card(data, template);
   const cardElement = card.generateCard();
 
-  const cardImage = cardElement.querySelector('.gallery__list-image');
-  const cardName = cardElement.querySelector('.gallery__image-title');
-
-  const handleCardImageClick = () => {
-    openPopup(popupOpenImage);
-    popupImage.src = cardImage.src;
-    popupImage.alt = cardName.textContent;
-    popupImageCaption.textContent = cardName.textContent;
-  }
+  const cardImage = searchCardImage(cardElement);
 
   cardImage.addEventListener('click', handleCardImageClick);
 
@@ -130,7 +132,7 @@ const createCard = (data, template) => {
 
 // render card
 
-const renderCard = (initialCards) => {
+const renderInitialCards = (initialCards) => {
   initialCards.forEach(item => {
     const cardElement = createCard(item, '#gallery__list-item');
 
@@ -138,7 +140,7 @@ const renderCard = (initialCards) => {
   })
 }
 
-renderCard(initialCards);
+renderInitialCards(initialCards);
 
 // edit profile popup
 
@@ -156,14 +158,11 @@ const handleButtonCloseEditProfileClick = () => {
 
 const handleAddButtonCardClick = () => {
   openPopup(popupAddCards);
-  inputTitleCard.value = '';
-  inputLinkCard.value = '';
 }
 
 const handleButtonCloseAddCardClick = () => {
     closePopup(popupAddCards);
-    inputTitleCard.value = '';
-    inputLinkCard.value = '';
+    formAddCards.reset()
   }
 
 // image popup
@@ -195,12 +194,16 @@ const handleFormAddCardsSubmit = (evt) => {
 
   galleryList.prepend(cardElement);
 
+  const cardImage = searchCardImage(cardElement);
+
+  cardImage.addEventListener('click', handleCardImageClick);
+
   handleButtonCloseAddCardClick();
 }
 
 // listeners
 
-buttonAddCard.addEventListener('click', handleAddButtonCardClick)
+buttonAddCard.addEventListener('click', handleAddButtonCardClick);
 buttonEditProfile.addEventListener('click', handleButtonEditProfileClick);
 
 buttonCloseEditProfile.addEventListener('click', handleButtonCloseEditProfileClick);
