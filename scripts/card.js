@@ -7,9 +7,9 @@ class Card {
 
 	_getCard() {
 		const cardElement = document.querySelector(this._template)
-												.content
-												.querySelector('.gallery__list-item')
-												.cloneNode(true);
+																.content
+																.querySelector('.gallery__list-item')
+																.cloneNode(true);
 
 		return cardElement;
 	}
