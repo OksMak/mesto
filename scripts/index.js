@@ -1,4 +1,5 @@
 import Card from './card.js';
+import FormValidator from './FormValidator.js';
 
 // popup list
 
@@ -155,6 +156,8 @@ const handleButtonCloseEditProfileClick = () => {
 
 const handleAddButtonCardClick = () => {
   openPopup(popupAddCards);
+  inputTitleCard.value = '';
+  inputLinkCard.value = '';
 }
 
 const handleButtonCloseAddCardClick = () => {
@@ -206,3 +209,28 @@ buttonCloseImage.addEventListener('click', handleButtonCloseImageClick);
 
 formEditProfile.addEventListener('submit', handleFormEditProfileSubmit);
 formAddCards.addEventListener('submit', handleFormAddCardsSubmit);
+
+const data = {
+	formSelector: '.popup__form',
+	inputSelector: '.popup__input',
+	submitButtonSelector: '.popup__button',
+	inactiveButtonClass: 'popup__button_disabled',
+	inputErrorClass: 'popup__input_type_error',
+	errorClass: 'popup__input-error_visible',
+	popupEditProfileClass: '.popup_type_edit-profile',
+	popupAddCardsClass: '.popup_type_add-cards',
+	buttonEditProfile: '.profile__button-edit',
+	buttonAddCards: '.profile__button-add',
+	buttonClose: '.popup__close'
+  };
+
+  const startValidation = (formList) => {
+    formList.forEach(form => {
+      if (form.querySelector('.popup__form')) {
+        const validation = new FormValidator(data, form);
+        validation.enableValidation();
+      }
+    })
+  }
+
+  startValidation(popupList);
