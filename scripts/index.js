@@ -82,9 +82,9 @@ const initialCards = [
 // close popup by overlay and keydown
 
 const handleCloseOverlayClick = (evt) => {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(evt.target);
-    }
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
+  }
 }
 
 const handleSetCursorMouseover = (evt) => {
@@ -172,7 +172,7 @@ const handleButtonOpenAddCardsClick = () => {
 
 const handleButtonCloseAddCardsClick = () => {
   closePopup(popupAddCards);
-  }
+}
 
 // image popup
 
