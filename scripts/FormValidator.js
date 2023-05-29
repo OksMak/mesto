@@ -41,12 +41,8 @@ class FormValidator {
 		return this._formSelector.querySelector(`.${inputElement.id}-error`);
 	}
 
-	_returnErrorElement(inputElement) {
-		return this._searchErrorElement(inputElement);
-	}
-
 	_showInputError(inputElement, errorMessage) {
-		const errorElement = this._returnErrorElement(inputElement);
+		const errorElement = this._searchErrorElement(inputElement);
 
 		inputElement.classList.add(this._inputErrorClass);
 		errorElement.classList.add(this._errorClass);
@@ -54,7 +50,7 @@ class FormValidator {
 	}
 
 	_hideInputError(inputElement) {
-		const errorElement = this._returnErrorElement(inputElement);
+		const errorElement = this._searchErrorElement(inputElement);
 
 		inputElement.classList.remove(this._inputErrorClass);
 		errorElement.classList.remove(this._errorClass);
@@ -71,30 +67,6 @@ class FormValidator {
 		}
 	}
 
-	// handles edit profile
-
-	_handleButtonOpenEditProfileClick(inputElement, buttonElement) {
-		this._isValid(inputElement);
-		this._setInactiveButton(buttonElement);
-	}
-
-	_handleButtonCloseEditProfileClick(inputElement, buttonElement) {
-		this._isValid(inputElement);
-		this._setInactiveButton(buttonElement);
-	}
-
-	// handles add cards
-
-	_handleButtonOpenAddCardsClick(inputElement, inputList, buttonElement) {
-		this._hideInputError(inputElement);
-		this._toggleButtonState(inputList, buttonElement);
-	}
-
-	_handleButtonCloseAddCardsClick(inputElement, inputList, buttonElement) {
-		this._hideInputError(inputElement);
-		this._toggleButtonState(inputList, buttonElement);
-	}
-
 	// handle input
 
 	_handleInputElementInput(inputElement, inputList, buttonElement) {
@@ -102,73 +74,16 @@ class FormValidator {
 		this._toggleButtonState(inputList, buttonElement);
 	}
 
-	// handle submit
-
-	_handleFormSubmit(inputElement, buttonElement) {
-		this._isValid(inputElement);
-		this._hideInputError(inputElement);
-		this._setInactiveButton(buttonElement);
-	}
-
-	// listener open form
-
-	_setEventListenerOpenForm(inputElement) {
-		this._popupEditProfile = document.querySelector(this._popupEditProfileClass);
-		this._buttonCloseEditProfile = this._popupEditProfile.querySelector(this._buttonClose);
-		this._buttonOpenEditProfile = document.querySelector(this._buttonEditProfile);
-
-		this._buttonOpenEditProfile.addEventListener('click', () => {
-			this._handleButtonOpenEditProfileClick(inputElement, this._buttonElement);
-		})
-
-		this._popupAddCards = document.querySelector(this._popupAddCardsClass);
-		this._buttonCloseAddCards = this._popupAddCards.querySelector(this._buttonClose);
-		this._buttonOpenAddCards = document.querySelector(this._buttonAddCards);
-
-		this._buttonOpenAddCards.addEventListener('click', () => {
-			this._handleButtonOpenAddCardsClick(inputElement, this._inputList, this._buttonElement)
-		})
-	}
-
-	// listener close form
-
-	_setEventListenerCloseForm(inputElement) {
-		this._buttonCloseEditProfile.addEventListener('click', () => {
-			this._handleButtonCloseEditProfileClick(inputElement, this._buttonElement);
-		})
-
-		this._buttonCloseAddCards.addEventListener('click', () => {
-			this._handleButtonCloseAddCardsClick(inputElement, this._inputList, this._buttonElement)
-		})
-	}
-
-	// listener submit form
-
-	_setEventListenerSubmitForm(inputElement) {
-		this._formSelector.addEventListener('submit', () => {
-			this._handleFormSubmit(inputElement, this._buttonElement);
-		})
-	}
-
-	// listener input form
-
-	_setEventListenerInputForm(inputElement) {
+	_setEventListener() {
+		this._inputList.forEach(inputElement => {
 			inputElement.addEventListener('input', () => {
 				this._handleInputElementInput(inputElement, this._inputList, this._buttonElement);
 			})
-	}
-
-	_setEventListeners() {
-		this._inputList.forEach(inputElement => {
-			this._setEventListenerInputForm(inputElement);
-			this._setEventListenerOpenForm(inputElement)
-			this._setEventListenerCloseForm(inputElement);
-			this._setEventListenerSubmitForm(inputElement)
 		})
 	}
 
 	enableValidation() {
-		this._setEventListeners();
+		this._setEventListener();
 	}
 }
 

@@ -1,8 +1,12 @@
 class Card {
-	constructor(data, template) {
-		this._link = data.link;
-		this._name = data.name;
+	constructor(dataCard, openPopup, template) {
+		this._link = dataCard.link;
+		this._name = dataCard.name;
 		this._template = template;
+		this._openPopup = openPopup;
+		this._popupOpenCardImage = document.querySelector('.popup_type_show-image');
+		this._popupImage = this._popupOpenCardImage.querySelector('.popup__image');
+		this._popupImageCaption = this._popupOpenCardImage.querySelector('.popup__caption');
 	}
 
 	_getCard() {
@@ -14,10 +18,6 @@ class Card {
 		return cardElement;
 	}
 
-	_openCardImage(cardElement) {
-		cardElement.classList.add('popup_opened');
-	}
-
 	_handleLikeButtonClick() {
 		this._element.querySelector('.gallery__like').classList.toggle('gallery__like_active');
 	}
@@ -27,11 +27,8 @@ class Card {
 	}
 
 	_handleCardImageClick() {
-		this._popupOpenCardImage = document.querySelector('.popup_type_show-image');
-		this._popupImage = document.querySelector('.popup__image');
-		this._popupImageCaption = document.querySelector('.popup__caption');
+		this._openPopup(this._popupOpenCardImage);
 
-		this._openCardImage(this._popupOpenCardImage);
 		this._popupImage.src = this._link;
 		this._popupImage.alt = this._name;
 		this._popupImageCaption.textContent = this._name;
@@ -62,6 +59,7 @@ class Card {
 		galleryImage.src = this._link;
 		galleryImage.alt = this._name;
 		galleryImageName.textContent = this._name;
+
 
 		return this._element;
 	}
