@@ -6,11 +6,6 @@ class FormValidator {
 		this._inactiveButtonClass = data.inactiveButtonClass;
 		this._inputErrorClass = data.inputErrorClass;
 		this._errorClass = data.errorClass;
-		this._popupEditProfileClass = data.popupEditProfileClass;
-		this._popupAddCardsClass = data.popupAddCardsClass;
-		this._buttonEditProfile = data.buttonEditProfile;
-		this._buttonAddCards = data.buttonAddCards;
-		this._buttonClose = data.buttonClose;
 		this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
 		this._buttonElement = this._formSelector.querySelector(this._submitButtonSelector);
 	}
@@ -65,6 +60,16 @@ class FormValidator {
 		} else {
 			this._hideInputError(inputElement);
 		}
+	}
+
+	disableSubmitButton() {
+		this._buttonElement.classList.add(this._inactiveButtonClass);
+	}
+
+	removeValidationErrors() {
+		this._inputList.forEach(inputElement => {
+			this._hideInputError(inputElement);
+		})
 	}
 
 	// handle input
