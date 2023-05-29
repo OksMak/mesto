@@ -101,11 +101,9 @@ const handleClosePopupKeydown = (evt) => {
   })
 }
 
-// open popup function
+// start validation
 
-const openPopup = (popupElement) => {
-  popupElement.classList.add('popup_opened');
-
+const startValidation = (popupElement) => {
   const popupForm = popupElement.querySelector(data.formSelector);
 
   if (popupForm) {
@@ -114,6 +112,14 @@ const openPopup = (popupElement) => {
     validation.disableSubmitButton();
     validation.removeValidationErrors();
   }
+}
+
+// open popup function
+
+const openPopup = (popupElement) => {
+  popupElement.classList.add('popup_opened');
+
+  startValidation(popupElement);
 
   document.addEventListener('keydown', handleClosePopupKeydown);
   popupElement.addEventListener('click', handleCloseOverlayClick);
