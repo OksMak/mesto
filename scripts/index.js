@@ -79,6 +79,14 @@ const initialCards = [
   }
 ]; 
 
+// validation forms
+
+const validatorEditProfile = new FormValidator(data, formEditProfile);
+validatorEditProfile.enableValidation();
+
+const validatorAddCards = new FormValidator(data, formAddCards);
+validatorAddCards.enableValidation();
+
 // close popup by overlay and keydown
 
 const handleCloseOverlayClick = (evt) => {
@@ -101,25 +109,10 @@ const handleClosePopupKeydown = (evt) => {
   })
 }
 
-// start validation
-
-const startValidation = (popupElement) => {
-  const popupForm = popupElement.querySelector(data.formSelector);
-
-  if (popupForm) {
-    const validation = new FormValidator(data, popupForm);
-    validation.enableValidation();
-    validation.disableSubmitButton();
-    validation.removeValidationErrors();
-  }
-}
-
 // open popup function
 
 const openPopup = (popupElement) => {
   popupElement.classList.add('popup_opened');
-
-  startValidation(popupElement);
 
   document.addEventListener('keydown', handleClosePopupKeydown);
   popupElement.addEventListener('click', handleCloseOverlayClick);
@@ -163,7 +156,10 @@ const handleButtonOpenEditProfileClick = () => {
   openPopup(popupEditProfile)
   inputProfileName.value = profileName.textContent;
   inputProfileProfession.value = profileProfession.textContent;
-  }
+
+  validatorEditProfile.disableSubmitButton();
+  validatorEditProfile.removeValidationErrors();
+}
 
 const handleButtonCloseEditProfileClick = () => {
   closePopup(popupEditProfile);
@@ -174,6 +170,9 @@ const handleButtonCloseEditProfileClick = () => {
 const handleButtonOpenAddCardsClick = () => {
   openPopup(popupAddCards);
   formAddCards.reset();
+
+  validatorAddCards.disableSubmitButton();
+  validatorAddCards.removeValidationErrors();
 }
 
 const handleButtonCloseAddCardsClick = () => {
