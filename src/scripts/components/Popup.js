@@ -1,4 +1,6 @@
-export default class Popup {
+import { initialCards } from "../utils/constants";
+
+export class Popup {
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
   }
@@ -60,5 +62,25 @@ export default class Popup {
     document.addEventListener('keydown', (evt) => {
       this._handleEscClose(evt);
     })
+  }
+}
+
+export class PopupWithImage extends Popup {
+  constructor(popupSelector) {
+    super(popupSelector);
+  }
+
+  open(element) {
+    super.open();
+    const popupOpenCardImage = this._searchPopup();
+		const popupImage = popupOpenCardImage.querySelector('.popup__image');
+		const popupImageCaption = popupOpenCardImage.querySelector('.popup__caption');
+
+    const cardImage = element.querySelector('.gallery__list-image');
+    const cardCaption = element.querySelector('.gallery__image-title');
+
+    popupImage.src = cardImage.src;
+		popupImage.alt = cardCaption.textContent;
+		popupImageCaption.textContent = cardCaption.textContent;
   }
 }

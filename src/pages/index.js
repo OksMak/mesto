@@ -3,25 +3,21 @@ import './index.css';
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import Section from '../scripts/components/Section.js';
-import Popup from '../scripts/components/Popup.js';
+import { Popup, PopupWithImage } from '../scripts/components/Popup.js';
 
 import {
   data,
   initialCards,
-  popupList,
   profileName,
   profileProfession,
   inputProfileName,
   inputProfileProfession,
-  buttonCloseEditProfile,
   buttonOpenEditProfile,
   formEditProfile,
   buttonOpenAddCards,
-  buttonCloseAddCards,
   formAddCards,
   inputTitleCard,
   inputLinkCard,
-  buttonCloseImage,
   galleryList
 } from '../scripts/utils/constants.js';
 
@@ -41,22 +37,18 @@ popupEditProfile.setEventListeners();
 const popupAddCards = new Popup('.popup_type_add-cards');
 popupAddCards.setEventListeners();
 
-const popupOpenImage = new Popup('.popup_type_show-image');
-popupOpenImage.setEventListeners();
+const popupWithImage = new PopupWithImage('.popup_type_show-image');
+popupWithImage.setEventListeners();
 
 
 const openPopup = (popupElement) => {
   popupElement.classList.add('popup_opened');
-
-  // document.addEventListener('keydown', handleClosePopupKeydown);
-  // popupElement.addEventListener('click', handleCloseOverlayClick);
-  // popupElement.addEventListener('mouseover', handleSetCursorMouseover);
 }
 
 // create card
 
-const createCard = (data, openPopup, template) => {
-  const card = new Card(data, openPopup, template);
+const createCard = (data, handleImageClick, template) => {
+  const card = new Card(data, handleImageClick, template);
   const cardElement = card.generateCard();
 
   return cardElement;
@@ -67,7 +59,9 @@ const createCard = (data, openPopup, template) => {
 const renderInitialCards = new Section({
   data: initialCards,
   renderer: (cardItem) => {
-    const cardElement = createCard(cardItem, openPopup, '#gallery__list-item');
+    const cardElement = createCard(cardItem, () => {
+      popupWithImage.open(cardElement);
+    }, '#gallery__list-item');
 
     renderInitialCards.addItem(cardElement);
   }
@@ -97,18 +91,12 @@ const handleButtonOpenAddCardsClick = () => {
   validatorAddCards.removeValidationErrors();
 }
 
-const handleButtonCloseAddCardsClick = () => {
-  closePopup(popupAddCards);
-}
-
 // edit profile submit
 
 const handleFormEditProfileSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = inputProfileName.value;
   profileProfession.textContent = inputProfileProfession.value;
-
-  handleButtonCloseEditProfileClick();
 }
 
 // add card submit
@@ -121,11 +109,11 @@ const handleFormAddCardsSubmit = (evt) => {
     link: inputLinkCard.value,
   }
 
-  const cardElement = createCard(dataCard, openPopup, '#gallery__list-item');
+  const cardElement = createCard(dataCard, () => {
+      popupWithImage.open(cardElement);
+    }, '#gallery__list-item');
 
   galleryList.prepend(cardElement);
-
-  handleButtonCloseAddCardsClick();
 }
 
 // listeners
