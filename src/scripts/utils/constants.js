@@ -54,14 +54,14 @@ export const inputProfileName = document.querySelector('.popup__input_type_name'
 export const inputProfileProfession = document.querySelector('.popup__input_type_profession');
 
 // popup edit profile
-export const popupEditProfile = document.querySelector('.popup_type_edit-profile');
+const popupEditProfile = document.querySelector('.popup_type_edit-profile');
 export const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close');
 export const buttonOpenEditProfile = document.querySelector('.profile__button-edit');
 export const formEditProfile = popupEditProfile.querySelector('.popup__form');
 
 // popup add cards
 
-export const popupAddCards = document.querySelector('.popup_type_add-cards');
+const popupAddCards = document.querySelector('.popup_type_add-cards');
 export const buttonOpenAddCards = document.querySelector('.profile__button-add');
 export const buttonCloseAddCards = popupAddCards.querySelector('.popup__close');
 export const formAddCards = popupAddCards.querySelector('.popup__form');
@@ -69,7 +69,7 @@ export const inputTitleCard = document.querySelector('.popup__input_type_title')
 export const inputLinkCard = document.querySelector('.popup__input_type_link');
 
 // popup image
-export const popupOpenImage = document.querySelector('.popup_type_show-image');
+const popupOpenImage = document.querySelector('.popup_type_show-image');
 export const buttonCloseImage = popupOpenImage.querySelector('.popup__close');
 
 // gallery-list

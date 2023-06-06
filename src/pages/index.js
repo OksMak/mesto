@@ -3,6 +3,7 @@ import './index.css';
 import Card from '../scripts/components/Card.js';
 import FormValidator from '../scripts/components/FormValidator.js';
 import Section from '../scripts/components/Section.js';
+import Popup from '../scripts/components/Popup.js';
 
 import {
   data,
@@ -12,17 +13,14 @@ import {
   profileProfession,
   inputProfileName,
   inputProfileProfession,
-  popupEditProfile,
   buttonCloseEditProfile,
   buttonOpenEditProfile,
   formEditProfile,
-  popupAddCards,
   buttonOpenAddCards,
   buttonCloseAddCards,
   formAddCards,
   inputTitleCard,
   inputLinkCard,
-  popupOpenImage,
   buttonCloseImage,
   galleryList
 } from '../scripts/utils/constants.js';
@@ -35,46 +33,24 @@ validatorEditProfile.enableValidation();
 const validatorAddCards = new FormValidator(data, formAddCards);
 validatorAddCards.enableValidation();
 
-// close popup by overlay and keydown
-
-const handleCloseOverlayClick = (evt) => {
-  if (evt.target.classList.contains('popup')) {
-    closePopup(evt.target);
-  }
-}
-
-const handleSetCursorMouseover = (evt) => {
-  if (evt.target.classList.contains('popup__container')) {
-    evt.target.style.cursor = 'auto';
-  }
-}
-
-const handleClosePopupKeydown = (evt) => {
-  popupList.forEach(popupElement => {
-    if (evt.key === 'Escape') {
-      closePopup(popupElement)
-    }
-  })
-}
-
 // open popup function
+
+const popupEditProfile = new Popup('.popup_type_edit-profile');
+popupEditProfile.setEventListeners();
+
+const popupAddCards = new Popup('.popup_type_add-cards');
+popupAddCards.setEventListeners();
+
+const popupOpenImage = new Popup('.popup_type_show-image');
+popupOpenImage.setEventListeners();
+
 
 const openPopup = (popupElement) => {
   popupElement.classList.add('popup_opened');
 
-  document.addEventListener('keydown', handleClosePopupKeydown);
-  popupElement.addEventListener('click', handleCloseOverlayClick);
-  popupElement.addEventListener('mouseover', handleSetCursorMouseover);
-}
-
-// close popup function
-
-const closePopup = (popupElement) => {
-  popupElement.classList.remove('popup_opened');
-
-  document.removeEventListener('keydown', handleClosePopupKeydown);
-  popupElement.removeEventListener('click', handleCloseOverlayClick);
-  popupElement.removeEventListener('mouseover', handleSetCursorMouseover);
+  // document.addEventListener('keydown', handleClosePopupKeydown);
+  // popupElement.addEventListener('click', handleCloseOverlayClick);
+  // popupElement.addEventListener('mouseover', handleSetCursorMouseover);
 }
 
 // create card
@@ -103,7 +79,7 @@ renderInitialCards.renderItems();
 // edit profile popup
 
 const handleButtonOpenEditProfileClick = () => {
-  openPopup(popupEditProfile)
+  popupEditProfile.open();
   inputProfileName.value = profileName.textContent;
   inputProfileProfession.value = profileProfession.textContent;
 
@@ -111,14 +87,10 @@ const handleButtonOpenEditProfileClick = () => {
   validatorEditProfile.removeValidationErrors();
 }
 
-const handleButtonCloseEditProfileClick = () => {
-  closePopup(popupEditProfile);
-}
-
 // add card popup
 
 const handleButtonOpenAddCardsClick = () => {
-  openPopup(popupAddCards);
+  popupAddCards.open();
   formAddCards.reset();
 
   validatorAddCards.disableSubmitButton();
@@ -127,12 +99,6 @@ const handleButtonOpenAddCardsClick = () => {
 
 const handleButtonCloseAddCardsClick = () => {
   closePopup(popupAddCards);
-}
-
-// image popup
-
-const handleButtonCloseImageClick = () => {
-  closePopup(popupOpenImage);
 }
 
 // edit profile submit
@@ -166,10 +132,6 @@ const handleFormAddCardsSubmit = (evt) => {
 
 buttonOpenAddCards.addEventListener('click', handleButtonOpenAddCardsClick);
 buttonOpenEditProfile.addEventListener('click', handleButtonOpenEditProfileClick);
-
-buttonCloseEditProfile.addEventListener('click', handleButtonCloseEditProfileClick);
-buttonCloseAddCards.addEventListener('click', handleButtonCloseAddCardsClick);
-buttonCloseImage.addEventListener('click', handleButtonCloseImageClick);
 
 formEditProfile.addEventListener('submit', handleFormEditProfileSubmit);
 formAddCards.addEventListener('submit', handleFormAddCardsSubmit);
