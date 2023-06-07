@@ -42,8 +42,6 @@ const popupEditProfile = new PopupWithForm({
   userInfo.setUserInfo(formData);
 }});
 
-
-
 // popup add cards
 
 const popupAddCards = new PopupWithForm({ 
