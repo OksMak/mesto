@@ -1,51 +1,56 @@
-import { initialCards } from "../utils/constants";
+import { data } from '../utils/constants.js';
 
-export class Popup {
+export default class Popup {
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
+    this._closeEsc = this._handleEscClose.bind(this);
   }
 
-  _searchPopup() {
+  _getPopup() {
     const popup = document.querySelector(this._popupSelector);
 
     return popup;
   }
 
-  _searchClosePopupButton() {
-    const buttonCloseButton = this._searchPopup().querySelector('.popup__close');
+  _getClosePopupButton() {
+    const buttonCloseButton = this._getPopup().querySelector(data.buttonClose);
 
     return buttonCloseButton;
   }
 
+  
+
   open() {
-    this._searchPopup().classList.add('popup_opened');
+    this._getPopup().classList.add(data.popupOpened);
+    document.addEventListener('keydown', this._closeEsc);
   }
 
   close() {
-    this._searchPopup().classList.remove('popup_opened');
+    this._getPopup().classList.remove(data.popupOpened);
+    document.removeEventListener('keydown', this._closeEsc);
   }
 
   _handleCloseOverlayClick(evt) {
-    if (evt.target.classList.contains('popup')) {
-      this.close(evt.target);
+    if (evt.target.classList.contains(data.popup)) {
+      this.close();
     }
   }
 
   _handleSetCursorMouseover(evt) {
-    if (evt.target.classList.contains('popup__container')) {
+    if (evt.target.classList.contains(data.popupContainer)) {
       evt.target.style.cursor = 'auto';
     }
   }
 
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {
+      console.log('test')
       this.close();
     }
   }
 
   setEventListeners() {
-    this._buttonClosePopup = this._searchClosePopupButton();
-    this._popup = this._searchPopup();
+    this._popup = this._getPopup();
 
     this._popup.addEventListener('click', (evt) => {
       this._handleCloseOverlayClick(evt);
@@ -55,32 +60,6 @@ export class Popup {
       this._handleSetCursorMouseover(evt);
     })
 
-    this._buttonClosePopup.addEventListener('click', () => {
-      this.close();
-    })
-
-    document.addEventListener('keydown', (evt) => {
-      this._handleEscClose(evt);
-    })
-  }
-}
-
-export class PopupWithImage extends Popup {
-  constructor(popupSelector) {
-    super(popupSelector);
-  }
-
-  open(element) {
-    super.open();
-    const popupOpenCardImage = this._searchPopup();
-		const popupImage = popupOpenCardImage.querySelector('.popup__image');
-		const popupImageCaption = popupOpenCardImage.querySelector('.popup__caption');
-
-    const cardImage = element.querySelector('.gallery__list-image');
-    const cardCaption = element.querySelector('.gallery__image-title');
-
-    popupImage.src = cardImage.src;
-		popupImage.alt = cardCaption.textContent;
-		popupImageCaption.textContent = cardCaption.textContent;
+    this._getClosePopupButton().addEventListener('click', this.close.bind(this));
   }
 }

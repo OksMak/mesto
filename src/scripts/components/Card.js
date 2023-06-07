@@ -1,25 +1,27 @@
+import { data } from '../utils/constants.js';
+
 export default class Card {
 	constructor(dataCard, handleCardClick, template) {
 		this._link = dataCard.link;
 		this._name = dataCard.name;
 		this._template = template;
 		this._handleCardClick = handleCardClick;
-		this._popupOpenCardImage = document.querySelector('.popup_type_show-image');
-		this._popupImage = this._popupOpenCardImage.querySelector('.popup__image');
-		this._popupImageCaption = this._popupOpenCardImage.querySelector('.popup__caption');
+		this._popupOpenCardImage = document.querySelector(data.popupOpenImage);
+		this._popupImage = this._popupOpenCardImage.querySelector(data.popupImage);
+		this._popupImageCaption = this._popupOpenCardImage.querySelector(data.popupCaption);
 	}
 
 	_getCard() {
 		const cardElement = document.querySelector(this._template)
 																.content
-																.querySelector('.gallery__list-item')
+																.querySelector(data.galleryListItem)
 																.cloneNode(true);
 
 		return cardElement;
 	}
 
 	_handleLikeButtonClick() {
-		this._element.querySelector('.gallery__like').classList.toggle('gallery__like_active');
+		this._element.querySelector(data.galleryLike).classList.toggle(data.galleryLikeActive);
 	}
 
 	_handleTrashButtonClick() {
@@ -27,30 +29,23 @@ export default class Card {
 	}
 
 	_setEventListeners() {
-		this._element.querySelector('.gallery__like').addEventListener('click', () => {
-			this._handleLikeButtonClick();
-		});
+		this._element.querySelector(data.galleryLike).addEventListener('click', this._handleLikeButtonClick.bind(this));
 
-		this._element.querySelector('.gallery__trash').addEventListener('click', () => {
-			this._handleTrashButtonClick();
-		})
+		this._element.querySelector(data.galleryTrash).addEventListener('click', this._handleTrashButtonClick.bind(this))
 
-		this._element.querySelector('.gallery__list-image').addEventListener('click', () => {
-			this._handleCardClick();
-		})
-
+		this._element.querySelector(data.galleryImage).addEventListener('click', this._handleCardClick)
 	}
 
 	generateCard() {
 		this._element = this._getCard();
 		this._setEventListeners();
 
-		const galleryImage = this._element.querySelector('.gallery__list-image');
-		const galleryImageName = this._element.querySelector('.gallery__image-title');
+		const cardImage = this._element.querySelector(data.galleryImage);
+		const cardImageName = this._element.querySelector(data.galleryTitle);
 
-		galleryImage.src = this._link;
-		galleryImage.alt = this._name;
-		galleryImageName.textContent = this._name;
+		cardImage.src = this._link;
+		cardImage.alt = this._name;
+		cardImageName.textContent = this._name;
 
 
 		return this._element;

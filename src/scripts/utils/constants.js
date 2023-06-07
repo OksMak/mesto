@@ -1,17 +1,62 @@
+import Card from "../components/Card.js";
+
 // data
 
 export const data = {
+  // popup
+
+  popup: 'popup',
+  popupContainer: 'popup__container',
+  popupOpened: 'popup_opened',
 	formSelector: '.popup__form',
-	inputSelector: '.popup__input',
+  buttonClose: '.popup__close',
+
+  // popup edit profile
+
+  popupEditProfile: '.popup_type_edit-profile',
+	buttonEditProfile: '.profile__button-edit',
+
+  // popup add cards
+
+  popupAddCards: '.popup_type_add-cards',
+  buttonAddCards: '.profile__button-add',
+
+  // popup show image
+
+  popupOpenImage: '.popup_type_show-image',
+  popupImage: '.popup__image',
+  popupCaption: '.popup__caption',
+
+  // validation
+
 	submitButtonSelector: '.popup__button',
 	inactiveButtonClass: 'popup__button_disabled',
 	inputErrorClass: 'popup__input_type_error',
 	errorClass: 'popup__input-error_visible',
-	popupEditProfileClass: '.popup_type_edit-profile',
-	popupAddCardsClass: '.popup_type_add-cards',
-	buttonEditProfile: '.profile__button-edit',
-	buttonAddCards: '.profile__button-add',
-	buttonClose: '.popup__close',
+
+  // popup inputs
+
+  inputSelector: '.popup__input',
+  inputProfileName: '.popup__input_type_name',
+  inputProfileProfession: '.popup__input_type_profession',
+  inputTitleCard: '.popup__input_type_title',
+  inputLinkCard: '.popup__input_type_link',
+
+  // profile
+
+  profileName: '.profile__name',
+  profileProfession: '.profile__speciality',
+	
+  // gallery
+
+  galleryTemplate: '#gallery__list-item',
+  galleryList: '.gallery__list',
+  galleryLike: '.gallery__like',
+  galleryLikeActive: 'gallery__like_active',
+  galleryTrash: '.gallery__trash',
+  galleryListItem: '.gallery__list-item',
+  galleryImage: '.gallery__image',
+  galleryTitle: '.gallery__image-title',
   };
 
   // cards
@@ -45,33 +90,32 @@ export const initialCards = [
 
 // popup list
 
-export const popupList = Array.from(document.querySelectorAll('.popup'));
+export const popupList = Array.from(document.querySelectorAll(data.popup));
 
 // profile
-export const profileName = document.querySelector('.profile__name');
-export const profileProfession = document.querySelector('.profile__speciality');
-export const inputProfileName = document.querySelector('.popup__input_type_name');
-export const inputProfileProfession = document.querySelector('.popup__input_type_profession');
+
+export const profileName = document.querySelector(data.profileName);
+export const profileProfession = document.querySelector(data.profileProfession);
+export const inputProfileName = document.querySelector(data.inputProfileName);
+export const inputProfileProfession = document.querySelector(data.inputProfileProfession);
 
 // popup edit profile
-const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-export const buttonCloseEditProfile = popupEditProfile.querySelector('.popup__close');
-export const buttonOpenEditProfile = document.querySelector('.profile__button-edit');
-export const formEditProfile = popupEditProfile.querySelector('.popup__form');
+
+const popupEditProfile = document.querySelector(data.popupEditProfile);
+export const buttonOpenEditProfile = document.querySelector(data.buttonEditProfile);
+export const formEditProfile = popupEditProfile.querySelector(data.formSelector);
 
 // popup add cards
 
-const popupAddCards = document.querySelector('.popup_type_add-cards');
-export const buttonOpenAddCards = document.querySelector('.profile__button-add');
-export const buttonCloseAddCards = popupAddCards.querySelector('.popup__close');
-export const formAddCards = popupAddCards.querySelector('.popup__form');
-export const inputTitleCard = document.querySelector('.popup__input_type_title');
-export const inputLinkCard = document.querySelector('.popup__input_type_link');
+const popupAddCards = document.querySelector(data.popupAddCards);
+export const buttonOpenAddCards = document.querySelector(data.buttonAddCards);
+export const formAddCards = popupAddCards.querySelector(data.formSelector);
 
-// popup image
-const popupOpenImage = document.querySelector('.popup_type_show-image');
-export const buttonCloseImage = popupOpenImage.querySelector('.popup__close');
+// createCard function
 
-// gallery-list
+export const createCard = (data, handleImageClick, template) => {
+  const card = new Card(data, handleImageClick, template);
+  const cardElement = card.generateCard();
 
-export const galleryList = document.querySelector('.gallery__list');
+  return cardElement;
+}

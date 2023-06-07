@@ -1,6 +1,6 @@
 export default class Section {
-  constructor({ data, renderer }, containerSelector) {
-    this._initialArray = data;
+  constructor({ dataCard, renderer }, containerSelector) {
+    this._initialArray = dataCard;
     this._renderer = renderer;
     this._containerSelector = document.querySelector(containerSelector);
   }
@@ -11,7 +11,17 @@ export default class Section {
     })
   }
 
-  addItem(element) {
-    this._containerSelector.append(element);
+  addItem(position, element) {
+    switch (position) {
+      case 'prepend': 
+        this._containerSelector.prepend(element);
+        break;
+
+      case 'append': 
+        this._containerSelector.append(element);
+    
+      default:
+        this._containerSelector.append(element);
+    }
   }
 }
