@@ -1,13 +1,12 @@
-import { data } from '../utils/constants.js';
-
 export default class FormValidator {
-  constructor(formSelector) {
+  constructor({ data, formSelector }) {
+    this._data = data;
 		this._formSelector = formSelector;
-		this._inputSelector = data.inputSelector;
-		this._submitButtonSelector = data.submitButtonSelector;
-		this._inactiveButtonClass = data.inactiveButtonClass;
-		this._inputErrorClass = data.inputErrorClass;
-		this._errorClass = data.errorClass;
+		this._inputSelector = this._data.inputSelector;
+		this._submitButtonSelector = this._data.submitButtonSelector;
+		this._inactiveButtonClass = this._data.inactiveButtonClass;
+		this._inputErrorClass = this._data.inputErrorClass;
+		this._errorClass = this._data.errorClass;
 		this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
 		this._buttonElement = this._formSelector.querySelector(this._submitButtonSelector);
 	}

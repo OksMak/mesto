@@ -9,8 +9,6 @@ import UserInfo from '../scripts/components/UserInfo.js';
 import {
   data,
   initialCards,
-  inputProfileName,
-  inputProfileProfession,
   buttonOpenEditProfile,
   formEditProfile,
   buttonOpenAddCards,
@@ -20,10 +18,18 @@ import {
 
 // validation
 
-const validatorEditProfile = new FormValidator(formEditProfile);
+const validatorEditProfile = new FormValidator({
+  data: data,
+  formSelector: formEditProfile
+});
+
 validatorEditProfile.enableValidation();
 
-const validatorAddCards = new FormValidator(formAddCards);
+const validatorAddCards = new FormValidator({
+  data: data,
+  formSelector: formAddCards
+});
+
 validatorAddCards.enableValidation();
 
 // userInfo
@@ -33,63 +39,58 @@ const userInfo = new UserInfo({
   selectorUserProfession: data.profileProfession 
 });
 
+// Section
+
+const section = new Section({
+  dataCard: initialCards,
+  renderer: (cardItem) => {
+    const cardElement = createCard(data, cardItem, () => {
+      popupWithImage.open(cardElement);
+    }, data.galleryTemplate);
+
+    section.addItem('append', cardElement);
+  }
+}, data.galleryList);
+
+section.renderItems();
+
 // popup edit profile
 
 const popupEditProfile = new PopupWithForm({ 
+  data: data,
   popupSelector: data.popupEditProfile, 
   handleFormSubmit: (formData) => {
 
   userInfo.setUserInfo(formData);
 }});
 
+// popup with image
+
+const popupWithImage = new PopupWithImage({ 
+  data: data,
+  popupSelector: data.popupOpenImage 
+});
+
 // popup add cards
 
 const popupAddCards = new PopupWithForm({ 
+  data: data,
   popupSelector: data.popupAddCards, 
   handleFormSubmit: (formData) => {
-    const renderCard = new Section({
-      dataCard: [formData],
-      renderer: (cardItem) => {
-        const cardElement = createCard(cardItem, () => {
-          popupWithImage.open(cardElement);
-        }, data.galleryTemplate);
-
-        renderCard.addItem('prepend', cardElement);
-      }
-    }, data.galleryList);
-
-  renderCard.renderItems();
-}});
-
-// popup with image
-
-const popupWithImage = new PopupWithImage({ popupSelector: data.popupOpenImage });
-
-// render initial cards
-
-const renderInitialCards = new Section({
-  dataCard: initialCards,
-  renderer: (cardItem) => {
-    const cardElement = createCard(cardItem, () => {
-      popupWithImage.open(cardElement);
+    const cardElement = createCard(data, formData, () => {
+      popupWithImage.open(cardElement)
     }, data.galleryTemplate);
-
-    renderInitialCards.addItem('append', cardElement);
-  }
-},
-  data.galleryList);
-
-renderInitialCards.renderItems();
+    
+    section.addItem('prepend', cardElement);
+}});
 
 // handlers
 
 const handleButtonOpenEditProfileClick = () => {
   const userData = userInfo.getUserInfo();
 
-  inputProfileName.value = userData.name;
-  inputProfileProfession.value = userData.profession;
-
   popupEditProfile.open();
+  popupEditProfile.setInputValues(userData);
 
   validatorEditProfile.disableSubmitButton();
   validatorEditProfile.removeValidationErrors();

@@ -2,31 +2,21 @@ export default class UserInfo {
   constructor({ selectorUserName, selectorUserProfession }) {
     this._selectorUserName = selectorUserName;
     this._selectorUserProfession = selectorUserProfession;
-  }
-
-  _getUserName() {
-    const userName = document.querySelector(this._selectorUserName);
-
-    return userName;
-  }
-
-  _getUserProfession() {
-    const userProfession = document.querySelector(this._selectorUserProfession);
-
-    return userProfession;
+    this._userName = document.querySelector(this._selectorUserName);
+    this._userProfession = document.querySelector(this._selectorUserProfession);
   }
 
   getUserInfo() {
     this._userData = {};
 
-    this._userData.name = this._getUserName().textContent;
-    this._userData.profession = this._getUserProfession().textContent;
+    this._userData.name = this._userName.textContent;
+    this._userData.profession = this._userProfession.textContent;
 
     return this._userData;
   }
 
   setUserInfo(userData) {
-    this._getUserName().textContent = userData.name;
-    this._getUserProfession().textContent = userData.profession;
+    this._userName.textContent = userData.name;
+    this._userProfession.textContent = userData.profession;
   }
 }

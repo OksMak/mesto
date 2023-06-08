@@ -37,8 +37,6 @@ export const data = {
   // popup inputs
 
   inputSelector: '.popup__input',
-  inputProfileName: '.popup__input_type_name',
-  inputProfileProfession: '.popup__input_type_profession',
   inputTitleCard: '.popup__input_type_title',
   inputLinkCard: '.popup__input_type_link',
 
@@ -51,12 +49,12 @@ export const data = {
 
   galleryTemplate: '#gallery__list-item',
   galleryList: '.gallery__list',
-  galleryLike: '.gallery__like',
-  galleryLikeActive: 'gallery__like_active',
-  galleryTrash: '.gallery__trash',
+  likeButton: '.gallery__like',
+  likeButtonActive: 'gallery__like_active',
+  trashButton: '.gallery__trash',
   galleryListItem: '.gallery__list-item',
-  galleryImage: '.gallery__image',
-  galleryTitle: '.gallery__image-title',
+  cardImage: '.gallery__image',
+  cardTitle: '.gallery__image-title',
   };
 
   // cards
@@ -96,8 +94,6 @@ export const popupList = Array.from(document.querySelectorAll(data.popup));
 
 export const profileName = document.querySelector(data.profileName);
 export const profileProfession = document.querySelector(data.profileProfession);
-export const inputProfileName = document.querySelector(data.inputProfileName);
-export const inputProfileProfession = document.querySelector(data.inputProfileProfession);
 
 // popup edit profile
 
@@ -113,8 +109,8 @@ export const formAddCards = popupAddCards.querySelector(data.formSelector);
 
 // createCard function
 
-export const createCard = (data, handleImageClick, template) => {
-  const card = new Card(data, handleImageClick, template);
+export const createCard = (data, dataCard, handleImageClick, template) => {
+  const card = new Card(data, dataCard, handleImageClick, template);
   const cardElement = card.generateCard();
 
   return cardElement;
