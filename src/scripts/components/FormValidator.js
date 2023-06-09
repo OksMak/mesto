@@ -24,11 +24,8 @@ export default class FormValidator {
 			buttonElement.classList.add(this._inactiveButtonClass);
 		} else {
 			buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.removeAttribute('disabled');
 		}
-	}
-
-	_setInactiveButton(buttonElement) {
-		buttonElement.classList.add(this._inactiveButtonClass);
 	}
 
 	// error element
@@ -65,6 +62,7 @@ export default class FormValidator {
 
 	disableSubmitButton() {
 		this._buttonElement.classList.add(this._inactiveButtonClass);
+    this._buttonElement.setAttribute('disabled', 'disabled');
 	}
 
 	removeValidationErrors() {
