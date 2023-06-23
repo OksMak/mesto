@@ -80,7 +80,6 @@ const popupAddCards = new PopupWithForm({
     const cardElement = createCard(data, formData, () => {
       popupWithImage.open(cardElement)
     }, data.galleryTemplate);
-    
     section.addItem('prepend', cardElement);
 }});
 
