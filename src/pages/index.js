@@ -12,35 +12,31 @@ import Card from '../scripts/components/Card.js';
 import {
   data,
   buttonOpenEditProfile,
-  formEditProfile,
   buttonOpenAddCards,
-  formAddCards,
   profileAvatarContainer,
-  formEditAvatar,
 } from '../scripts/utils/constants.js';
 
 // validation
 
-const validatorEditProfile = new FormValidator({
-  data: data,
-  formSelector: formEditProfile
-});
+const formValidators = {};
 
-validatorEditProfile.enableValidation();
+const enableValidation = (data) => {
+  const formList = Array.from(document.querySelectorAll(data.formSelector));
 
-const validatorAddCards = new FormValidator({
-  data: data,
-  formSelector: formAddCards
-});
+  formList.forEach((formElement) => {
+    const validator = new FormValidator({ 
+      data,
+      form: formElement 
+    });
 
-validatorAddCards.enableValidation();
+    const formName = formElement.getAttribute('name');
 
-const validatorEditAvatar = new FormValidator({
-  data: data,
-  formSelector: formEditAvatar
-});
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  })
+}
 
-validatorEditAvatar.enableValidation();
+enableValidation(data);
 
 // api
 
@@ -65,7 +61,7 @@ const userInfo = new UserInfo({
 const section = new Section({
   renderer: (cardItem) => {
     const cardElement = createCard(cardItem, data.galleryTemplate);
-    section.addItem('append', cardElement);
+    section.addItem(cardElement);
   }
 }, data.galleryList);
 
@@ -82,19 +78,36 @@ api.getServerData()
   })
   .catch((err) => console.error(err));
 
+  // handle submit function
+
+  const handleSubmit = (request, popup, loadingText = 'Сохранение...') => { 
+    popup.renderLoading(true, loadingText);
+
+    request()
+      .then(() => {
+        popup.close();
+      })
+      .catch((err) => console.error(err))
+      .finally(() => {
+        popup.renderLoading(false);
+      })
+  };
+
 // popup edit profile
 
 const popupEditProfile = new PopupWithForm({ 
   data: data,
   popupSelector: data.popupEditProfile, 
   handleFormSubmit: (formData) => {
-    popupEditProfile.isDataLoading(true, 'Сохранение...', 'Сохранить');
-    api.editProfileInfo(formData)
-    .then((res) => {
-      userInfo.setUserInfo(res);
-    })
-    .catch((err) => console.error(err))
-    .finally(() => popupEditProfile.isDataLoading(false, 'Сохранение...', 'Сохранить'));
+    const makeRequest = () => {
+      return api.editProfileInfo(formData)
+        .then((res) => {
+          userInfo.setUserInfo(res);
+        })
+        .catch((err) => console.error(err));
+    }
+
+    handleSubmit(makeRequest, popupEditProfile);
 }});
 
 // popup with image
@@ -110,14 +123,17 @@ const popupAddCards = new PopupWithForm({
   data: data,
   popupSelector: data.popupAddCards,
   handleFormSubmit: (formData) => {
-    popupAddCards.isDataLoading(true, 'Создание...', 'Создать');
-    api.addNewCard(formData)
-    .then((res) => {
-      const cardElement = createCard(res, data.galleryTemplate);
-      section.addItem('prepend', cardElement);
-    })
-    .catch((err) => console.error(err))
-    .finally(() => popupAddCards.isDataLoading(false, 'Создание...', 'Создать'));
+
+    const makeRequest = () => {
+      return api.addNewCard(formData)
+        .then((res) => {
+          const cardElement = createCard(res, data.galleryTemplate);
+          section.addItem(cardElement, 'prepend');
+        })
+        .catch((err) => console.error(err));
+    }
+
+    handleSubmit(makeRequest, popupAddCards, 'Создание...');
 }});
 
 // popup edit avatar
@@ -126,13 +142,15 @@ const popupEditAvatar = new PopupWithForm({
   data: data,
   popupSelector: data.popupEditAvatar,
   handleFormSubmit: (formData) => {
-    popupEditAvatar.isDataLoading(true, 'Сохранение...', 'Сохранить');
-    api.editAvatar(formData)
-    .then((res) => {
-      userInfo.setUserAvatar(res);
-    })
-    .catch((err) => console.error(err))
-    .finally(() => popupEditAvatar.isDataLoading(false, 'Сохранение...', 'Сохранить'));
+    const makeRequest = () => {
+      return api.editAvatar(formData)
+        .then((res) => {
+          userInfo.setUserAvatar(res);
+        })
+        .catch((err) => console.error(err));
+    }
+
+    handleSubmit(makeRequest, popupEditAvatar);
   }
 })
 
@@ -160,14 +178,14 @@ const createCard = (dataCard, template) => {
           card.removeLike();
           card.updateLikes(res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
       } else {
         api.addLike(card.getCardId())
         .then((res) => {
           card.addLike();
           card.updateLikes(res);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
       }
     },
     handleTrashButtonClick: (evt) => {
@@ -177,7 +195,9 @@ const createCard = (dataCard, template) => {
         api.removeCard(card.getCardId())
         .then(() => {
           cardElement.remove();
+          popupWarning.close();
         })
+        .catch((err) => console.error(err));
       })
     },
     template});
@@ -192,25 +212,26 @@ const handleButtonOpenEditProfileClick = () => {
   popupEditProfile.open();
   popupEditProfile.setInputValues(userData);
 
-  validatorEditProfile.disableSubmitButton();
-  validatorEditProfile.removeValidationErrors();
+  formValidators['profile-form'].disableSubmitButton();
+  formValidators['profile-form'].removeValidationErrors();
 }
 
 const handleButtonOpenAddCardsClick = () => {
   popupAddCards.open();
 
-  validatorAddCards.disableSubmitButton();
-  validatorAddCards.removeValidationErrors();
+  formValidators['cards-form'].disableSubmitButton();
+  formValidators['cards-form'].removeValidationErrors();
 }
 
 const handleEditAvatarClick = () => {
   popupEditAvatar.open();
 
-  validatorEditAvatar.disableSubmitButton();
-  validatorEditAvatar.removeValidationErrors();
+  formValidators['avatar-form'].disableSubmitButton();
+  formValidators['avatar-form'].removeValidationErrors();
 }
 
 // listeners
+
 popupEditProfile.setEventListeners();
 popupAddCards.setEventListeners();
 popupWithImage.setEventListeners();

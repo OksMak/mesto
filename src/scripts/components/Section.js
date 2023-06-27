@@ -1,7 +1,7 @@
 export default class Section {
   constructor({ renderer }, containerSelector) {
     this._renderer = renderer;
-    this._containerSelector = document.querySelector(containerSelector);
+    this._container = document.querySelector(containerSelector);
   }
 
   renderItems(initialCards) {
@@ -10,17 +10,14 @@ export default class Section {
     })
   }
 
-  addItem(position, element) {
+  addItem(element, position) {
     switch (position) {
       case 'prepend': 
-        this._containerSelector.prepend(element);
+        this._container.prepend(element);
         break;
 
-      case 'append': 
-        this._containerSelector.append(element);
-    
       default:
-        this._containerSelector.append(element);
+        this._container.append(element);
     }
   }
 }

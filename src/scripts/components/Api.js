@@ -12,18 +12,22 @@ export default class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  _request(endPoint, options) {
+    return fetch(`${this._baseUrl}/${endPoint}`, options)
+      .then((res) => this._handleCheck(res));
+  }
+
+
   _getProfileInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+    return this._request('users/me', {
+      headers: this._headers
     })
-    .then((res) => this._handleCheck(res));
   }
 
   _getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+    return this._request('cards', {
+      headers: this._headers
     })
-    .then((res) => this._handleCheck(res));
   }
 
   getServerData() {
@@ -31,26 +35,24 @@ export default class Api {
   }
 
   removeLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+    return this._request(`cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: this._headers
     })
-    .then((res) => this._handleCheck(res));
   }
 
   editAvatar(data) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return this._request('users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.avatarLink,
+        avatar: data.avatarLink
       })
     })
-    .then((res) => this._handleCheck(res));
   }
 
   editProfileInfo(data) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._request('users/me', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -58,19 +60,17 @@ export default class Api {
         about: data.profession
       })
     })
-    .then((res) => this._handleCheck(res));
   }
 
   addLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+    return this._request(`cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: this._headers,
+      headers: this._headers
     })
-    .then((res) => this._handleCheck(res));
   }
 
   addNewCard(data) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return this._request('cards', {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -78,14 +78,12 @@ export default class Api {
         link: data.link
       })
     })
-    .then((res) => this._handleCheck(res));
   }
 
   removeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return this._request(`cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
-    .then((res) => this._handleCheck(res));
   }
 }

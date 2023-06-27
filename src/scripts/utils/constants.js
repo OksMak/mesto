@@ -81,17 +81,8 @@ export const profileAvatarContainer = document.querySelector(data.profileAvatarC
 
 // popup edit profile
 
-const popupEditProfile = document.querySelector(data.popupEditProfile);
 export const buttonOpenEditProfile = document.querySelector(data.buttonEditProfile);
-export const formEditProfile = popupEditProfile.querySelector(data.formSelector);
 
 // popup add cards
 
-const popupAddCards = document.querySelector(data.popupAddCards);
 export const buttonOpenAddCards = document.querySelector(data.buttonAddCards);
-export const formAddCards = popupAddCards.querySelector(data.formSelector);
-
-// popup edit avatar
-
-const popupEditAvatar = document.querySelector(data.popupEditAvatar);
-export const formEditAvatar = popupEditAvatar.querySelector(data.formSelector);

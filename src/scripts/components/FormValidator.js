@@ -1,14 +1,14 @@
 export default class FormValidator {
-  constructor({ data, formSelector }) {
+  constructor({ data, form }) {
     this._data = data;
-		this._formSelector = formSelector;
+		this._form = form;
 		this._inputSelector = this._data.inputSelector;
 		this._submitButtonSelector = this._data.submitButtonSelector;
 		this._inactiveButtonClass = this._data.inactiveButtonClass;
 		this._inputErrorClass = this._data.inputErrorClass;
 		this._errorClass = this._data.errorClass;
-		this._inputList = Array.from(this._formSelector.querySelectorAll(this._inputSelector));
-		this._buttonElement = this._formSelector.querySelector(this._submitButtonSelector);
+		this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
+		this._buttonElement = this._form.querySelector(this._submitButtonSelector);
 	}
 
 	_hasInvalidInput(inputList) {
@@ -40,7 +40,7 @@ export default class FormValidator {
 	// error element
 
 	_searchErrorElement(inputElement) {
-		return this._formSelector.querySelector(`.${inputElement.id}-error`);
+		return this._form.querySelector(`.${inputElement.id}-error`);
 	}
 
 	_showInputError(inputElement, errorMessage) {
