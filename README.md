@@ -6,7 +6,7 @@
 * grid layout;
 * flexbox;
 * адаптивной верстке;
-* java script.
+* java script;
 
 ## Ссылка на проект:
 
